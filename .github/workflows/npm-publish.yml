@@ -1,0 +1,44 @@
+name: npm-publish
+
+run-name: 'publish ${{ inputs.tag }}@${{ inputs.version }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag'
+        required: true
+        type: string
+      version:
+        description: 'Version'
+        required: true
+        type: string
+      ref:
+        description: 'Commit'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref }}
+      - name: Install Node and dependencies
+        uses: actions/setup-node@v7
+        with:
+          node-version: "lts/*"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install -g npm@latest
+      - run: npm clean-install
+      - run: npm version "$VERSION" --git-tag-version=false --allow-same-version
+        env:
+          VERSION: ${{ inputs.version }}
+      - run: npm publish --provenance --tag="$TAG"
+        env:
+          TAG: ${{ inputs.tag }}

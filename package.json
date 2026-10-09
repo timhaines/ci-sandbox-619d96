@@ -1,0 +1,17 @@
+{
+  "name": "@timhaines/preview-e2e-fixture",
+  "version": "0.0.0",
+  "description": "Build-integrity fixture. Not a real library.",
+  "main": "index.js",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timhaines/ci-sandbox-619d96.git"
+  }
+}
